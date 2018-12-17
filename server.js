@@ -9,7 +9,15 @@ const app = express();
 app.use(express.static('public'));
 
 app.get('/api/notes', (req, res) => {
-  res.json(data);
+  console.log(req.query);
+
+  if (req.query.searchTerm) {
+    const searchTerm = req.query.searchTerm;
+    const filteredResults = data.filter(note => note.title.includes(searchTerm) || note.content.includes(searchTerm));
+    res.json(filteredResults);
+  } else {
+    res.json(data);
+  }
 });
 
 app.get('/api/notes/:id', (req, res) => {
