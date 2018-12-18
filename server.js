@@ -1,8 +1,8 @@
 'use strict';
 
 const express = require('express');
-
 const data = require('./db/notes');
+const { PORT } = require('./config');
 
 const app = express();
 
@@ -24,7 +24,7 @@ app.get('/api/notes/:id', (req, res) => {
   res.json(item);
 });
 
-app.listen(8080, function() {
+app.listen(PORT, function() {
   // eslint-disable-next-line no-console
   console.info(`Server listening on ${this.address().port}`);
 }).on('error', err => {
