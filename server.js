@@ -3,8 +3,11 @@
 const express = require('express');
 const data = require('./db/notes');
 const { PORT } = require('./config');
+const { requestLogger } = require('./middleware/logger');
 
 const app = express();
+
+app.use(requestLogger);
 
 app.use(express.static('public'));
 
