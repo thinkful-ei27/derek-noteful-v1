@@ -29,7 +29,10 @@ app.get('/boom', (req, res, next) => {
 app.get('/api/notes', (req, res, next) => {
   const { searchTerm } = req.query;
 
-  notes.filter(searchTerm, (err, list) => {
+  // creating a new query object because notes.filter() expects { title: 'string' }
+  const newQuery = searchTerm ? { title: searchTerm } : {};
+
+  notes.filter(newQuery, (err, list) => {
     if (err) {
       return next(err); // goes to error handler
     }
