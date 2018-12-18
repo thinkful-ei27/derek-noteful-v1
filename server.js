@@ -1,7 +1,12 @@
 'use strict';
 
 const express = require('express');
+
+// Simple In-Memory Database
 const data = require('./db/notes');
+const simDB = require('./db/simDB');
+const notes = simDB.initialize(data);
+
 const { PORT } = require('./config');
 const { requestLogger } = require('./middleware/logger');
 
