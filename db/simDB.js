@@ -28,19 +28,19 @@ const simDB = {
     }, DELAY);
   },
 
-  filter: function (query = {}, callback) {
-    setTimeout(() => {
-      try {
-        // let list = term ? this.data.filter(item => item.name.includes(term)) : this.data;
-        let list = this.data.filter(item => Object.keys(query).every(key => item[key].includes(query[key])));
-        callback(null, list);
-      } catch (err) {
-        callback(err);
-      }
-    }, DELAY);
-  },
+  // oldFilter: function (query = {}, callback) {
+  //   setTimeout(() => {
+  //     try {
+  //       // let list = term ? this.data.filter(item => item.name.includes(term)) : this.data;
+  //       let list = this.data.filter(item => Object.keys(query).every(key => item[key].includes(query[key])));
+  //       callback(null, list);
+  //     } catch (err) {
+  //       callback(err);
+  //     }
+  //   }, DELAY);
+  // },
 
-  titleOnlyFilter: function (term, callback) {
+  filter: function (term, callback) {
     setTimeout(() => {
       try {
         let list = term ? this.data.filter(item => item.title.includes(term)) : this.data;

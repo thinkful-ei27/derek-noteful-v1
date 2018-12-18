@@ -1,6 +1,7 @@
 /* global $ */
 'use strict';
 
+// eslint-disable-next-line no-unused-vars
 const api = {
 
   search: function (query, callback) {
@@ -18,6 +19,17 @@ const api = {
       type: 'GET',
       dataType: 'json',
       url: `/api/notes/${id}`,
+      success: callback
+    });
+  },
+
+  update: function(id, obj, callback) {
+    $.ajax({
+      type: 'PUT',
+      url: `/api/notes/${id}`,
+      contentType: 'application/json',
+      dataType: 'json',
+      data: JSON.stringify(obj),
       success: callback
     });
   }
