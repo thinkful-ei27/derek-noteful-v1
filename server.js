@@ -20,20 +20,30 @@ app.get('/boom', (req, res, next) => {
   throw new Error('Boom!!');
 });
 
-app.get('/api/notes', (req, res) => {
-
+app.get('/api/notes', (req, res, next) => {
   const { searchTerm } = req.query;
-  if (searchTerm) {
-    const filteredResults = data.filter(note => note.title.includes(searchTerm) || note.content.includes(searchTerm));
-    res.json(filteredResults);
-  } else {
-    res.json(data);
-  }
+
+  notes.filter(searchTerm, (err, list) => {
+    if (err) {
+      return next(err); // goes to error handler
+    }
+    res.json(list);
+  });
 });
 
-app.get('/api/notes/:id', (req, res) => {
-  const item = data.find(item => item.id === Number(req.params.id));
-  res.json(item);
+app.get('/api/notes/:id', (req, res, next) => {
+  const { id } = req.params;
+
+  notes.find(id, (err, item) => {
+    if (err) {
+      return next(err);
+    }
+    if (item) {
+      res.json(item);
+    } else {
+      next();
+    }
+  });
 });
 
 app.use(function (req, res, next) {
