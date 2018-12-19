@@ -84,4 +84,15 @@ notesRouter.put('/notes/:id', (req, res, next) => {
   });
 });
 
+notesRouter.delete('/notes/:id', (req, res, next) => {
+  const id = req.params.id;
+  notes.delete(id, err => {
+    if (err) {
+      err.status = 500;
+      return next(err);
+    }
+    res.status(204).end();
+  });
+});
+
 module.exports = notesRouter;
