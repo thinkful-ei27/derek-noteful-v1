@@ -72,6 +72,13 @@ notesRouter.put('/notes/:id', (req, res, next) => {
     }
   });
 
+  /***** Never trust users - validate input *****/
+  if (!updateObj.title) {
+    const err = new Error('Missing `title` in request body');
+    err.status = 400;
+    return next(err);
+  }
+
   notes.update(id, updateObj, (err, item) => {
     if (err) {
       return next(err);
@@ -86,6 +93,7 @@ notesRouter.put('/notes/:id', (req, res, next) => {
 
 notesRouter.delete('/notes/:id', (req, res, next) => {
   const id = req.params.id;
+
   notes.delete(id, err => {
     if (err) {
       err.status = 500;
