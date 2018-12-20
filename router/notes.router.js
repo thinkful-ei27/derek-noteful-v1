@@ -21,42 +21,39 @@ notesRouter.post('/notes', (req, res, next) => {
     return next(err);
   }
 
-  notes.create(newItem, (err, item) => {
-    if (err) {
-      return next(err);
-    }
-    if (item) {
-      res.location(`http://${req.headers.host}/api/notes/${item.id}`).status(201).json(item);
-    } else {
-      next();
-    }
-  });
+  notes.create(newItem)
+    .then(item => {
+      if (item) {
+        res.location(`http://${req.headers.host}/api/notes/${item.id}`).status(201).json(item);
+      } else {
+        next();
+      }
+    })
+    .catch(err => next(err));
 });
 
 notesRouter.get('/notes', (req, res, next) => {
   const { searchTerm } = req.query;
 
-  notes.filter(searchTerm, (err, list) => {
-    if (err) {
-      return next(err); // goes to error handler
-    }
-    res.json(list);
-  });
+  notes.filter(searchTerm)
+    .then(list => res.json(list))
+    .catch(err => next(err));
 });
 
 notesRouter.get('/notes/:id', (req, res, next) => {
   const { id } = req.params;
 
-  notes.find(id, (err, item) => {
-    if (err) {
-      return next(err);
-    }
-    if (item) {
-      res.json(item);
-    } else {
-      next();
-    }
-  });
+  notes.find(id)
+    .then(item => {
+      if (item) {
+        res.json(item);
+      } else {
+        next();
+      }
+    })
+    .catch(err => {
+      next(err);
+    });
 });
 
 notesRouter.put('/notes/:id', (req, res, next) => {
@@ -79,28 +76,19 @@ notesRouter.put('/notes/:id', (req, res, next) => {
     return next(err);
   }
 
-  notes.update(id, updateObj, (err, item) => {
-    if (err) {
-      return next(err);
-    }
-    if (item) {
-      res.json(item);
-    } else {
-      next();
-    }
-  });
+  notes.update(id, updateObj)
+    .then(item => {
+      item ? res.json(item) : next();
+    })
+    .catch(err => next(err));
 });
 
 notesRouter.delete('/notes/:id', (req, res, next) => {
   const id = req.params.id;
 
-  notes.delete(id, err => {
-    if (err) {
-      err.status = 500;
-      return next(err);
-    }
-    res.status(204).end();
-  });
+  notes.delete(id)
+    .then(() => res.status(204).end())
+    .catch(err => next(err));
 });
 
 module.exports = notesRouter;
