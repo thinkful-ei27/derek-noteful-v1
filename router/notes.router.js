@@ -51,9 +51,7 @@ notesRouter.get('/notes/:id', (req, res, next) => {
         next();
       }
     })
-    .catch(err => {
-      next(err);
-    });
+    .catch(err => next(err));
 });
 
 notesRouter.put('/notes/:id', (req, res, next) => {
