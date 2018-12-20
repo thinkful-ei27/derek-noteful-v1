@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Scratch</title>
+</head>
+<body>
+  <script type="text/javascript" src="//code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="scripts/api.js"></script>
+  <script>
+    // // test get all
+    // api.search({})
+    //   .then(response => {
+    //     console.log(response);
+    //   });
+
+    // // test get all with search term
+    // api.search({searchTerm: 'cats'})
+    //   .then(response => {
+    //     console.log(response);
+    //   });
+
+    // // test find
+    // api.details(1001)
+    //   .then(response => console.log(response));
+
+    // // test put
+    // api.update(1005, {
+    //   title: "New scratch title",
+    //   content: "This content has been updated by the scratch file."
+    // })
+    //   .then(response => console.log(response));
+
+    // // test post
+    // api.create({
+    //   title: 'New scratch note',
+    //   content: 'This new note was created in the scratch file'
+    // })
+    //   .then(response => console.log(response));
+
+    // test delete
+    api.remove(1002)
+      .then(response => console.log(response));
+  </script>
+</body>
+</html>
